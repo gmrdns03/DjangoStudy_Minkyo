@@ -6,4 +6,7 @@ from shop.models import Item
 
 @admin.register(Item)
 class PostAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
     list_display = ["name", "desc", "price", "is_public", "created_at", "updated_at"]
+    list_filter = ["is_public", "created_at"]
+
