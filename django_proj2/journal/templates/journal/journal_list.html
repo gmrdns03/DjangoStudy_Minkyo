@@ -1,0 +1,21 @@
+<table>
+    <tbody>
+        {% for post in journal_list %}
+        <tr>
+            <td>
+                <a href="/journal/{{ post.pk }}/">{{ post.title }}</a>
+                <hr />
+            </td>
+            <td> {{ post.journalist }}</td>
+            {% if post.photo %}
+            <td> <img src="{{ post.photo.url }}" style="width: 100px; height: 100px;" /></td>
+            {% endif %}
+            <td> {{ post.content }} </td>
+            <td> {{ post.created_at }} </td>
+        </tr>
+
+
+        {% endfor %}
+
+    </tbody>
+</table>
