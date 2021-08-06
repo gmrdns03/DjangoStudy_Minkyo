@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from journal.models import Post
 from django.http import HttpRequest
+from django.views.generic import ListView
 
 # Create your views here.
 
