@@ -1,0 +1,111 @@
+1. 프로젝트 생성
+가상환경이 활성화 된 상태(activate 가상환경이름)로 프로젝트를 만들고자 하는 폴더로 간다.
+-1 django-admin startproject 프로젝트이름
+-2 프로젝트 폴더 안으로 이동
+-3. python manage.py migrate
+
+2. 슈퍼유저 만들기
+-1 python manage.py createsuperuser
+-2 python manage.py runserver  --> 장고 페이지로 서버가 실행되는지 확인하기
+
+3. 만들 앱 생성하기
+-1 python manage.py startapp 앱이름
+--> 프로젝트 폴더 하위에 앱이름으로 되어있는 앱 폴더가 만들어졌는지 확인
+
+4. 프로젝트 초반 명시 (필수X) 필요 사항
+-1 앱 프로젝트 폴더에
+	requirement.txt 만들어서 사용할 라이브러리 프로그램 버전 등 정리
+-2 프로젝트 메인 폴더에
+	.gitignore 파일 만들어서 git에 추가하지 않을 파일들 지정
+
+5. 프로젝트 관리 폴더 셋팅
+-1 settings.py
+	- installed_apps 밑에 만든 앱프로젝트 이름 추가하기(뒤에 반드시 콤마(,)붙이기)
+	- 맨 밑에 LANGUAGE_CODE에 'ko-kr'로 바꾸면 한글지원
+	- 이미지를 추가할 예정인 경우 이미지를 저장하고 불러올 경로 지정
+		MEDIA_URL = "/media/"
+		MEDIA_ROOT = BASE_DIR / "media"
+
+02 urls.py
+	- 이미지 관리를 위해
+	from django.conf import settings
+	from django.conf.urls.static import static
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+	- 패쓰 설정을 위해
+	from django.urls import includ
+	urlpatterns = [ ]리스트에 path("앱이름/", include("앱이름.urls")), 추가
+
+6. 앱 프로젝트 폴더 기초 셋팅
+-1 urls.py 파일 만들기
+	- 관리폴더 urls.py에 "앱이름.urls"를 패쓰 설정했으므로 오류를 방지하기위해
+	from django.contrib import admin
+	from django.urls import path, include
+
+	urlpatterns = [ ]
+
+-2 forms.py 파일 만들기
+
+-3 templates 폴더와 그 하위에 '앱이름'으로 된 폴더 만들기
+
+
+7. 앱에 models.py에 모델 생성하기
+	-1 models.py 에 테이블 형식 만들기
+
+	-2 admin.py에 만든 모델들 등록하기 
+	from movie.models import Actor, Movie, Video, Review  -> 만든 모델 호출하는 코드
+	@admin.register(Video)
+	class VideoAdmin(admin.ModelAdmin):
+	    search_fields = ["movie"]
+	    list_display = ["movie", "youtube_url"]
+	    list_filter = ["created_at"]
+	 
+		(위 같은 양식으로 작성)
+
+	-3 cmd 창에서 python manage.py makemigrations 앱이름
+	-4 cmd 창에서 python manage.py migrate 앱이름
+	-5 앱프로젝트 폴더 하위 migrations폴더에 0001_initial.py 파일이 만들어졌는지 확인
+
+8. DB에 파일들 저장하기
+	-1. cmd창에서 manage.py파일이 있는 폴더로 이동
+	-2. cmd창에서 python manage.py runserver
+	-3. 서버가 열린 아이피 http://127.0.0.1:8000/admin/으로 가면 만든 모델들에 데이터들을 입력할 수 있다.
+	-4. 넣고 싶은 데이터들을 입력한다.
+
+
+================= 입력한 데이터 웹 화면에 메인화면 리스트 구현하기 ======================
+1. views.py  2. urls.py  3. html템플릿 만들기
+=========================================================================
+1. views.py 셋팅하기
+	from movie.models import Actor, Movie, Video, Review
+	from django.http import HttpRequest, HttpResponse
+	from django.shortcuts import redirect, render
+
+	def index(request: HttpRequest):
+    	qs = Movie.objects.all()
+    	return render(request, "movie/movie_list.html", {"movie_list": qs,},)
+
+2. urls.py 셋팅하기
+	from movie import views
+	from django.urls import path
+
+	urlpatterns = [
+    		path("", views.index, name="index"),
+	]
+
+3. templates/movie폴더 안에 movie_list.html 만들기
+
+4. 오류가 난다면 초반 셋팅에서 
+	urls.py 패쓰 추가
+ 	setting.py의 INSTALLED_APP에 앱이 추가 되었는지
+	확인하기
+
+
+
+
+
+
+
+
+
+
