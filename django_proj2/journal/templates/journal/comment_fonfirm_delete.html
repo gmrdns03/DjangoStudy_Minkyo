@@ -1,0 +1,13 @@
+{% extends "journal/layout.html" %}
+
+{% block content %}
+
+<h2>정말 삭제할건가?</h2>
+
+<form action="" method="post">
+{% csrf_token %}
+<input type="submit" name=" DELETE" />
+
+</form>
+
+{% endblock %}

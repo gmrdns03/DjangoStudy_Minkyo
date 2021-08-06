@@ -4,7 +4,7 @@
 
 <h2>{{ post.title }}</h2>
 
-{{ post.content }} <br>
+{{ post.content|linebreaks }} <br>
 <br>
 
 {% if post.photo %}
@@ -23,6 +23,7 @@
 <hr />
 
 <a href="/journal/">목록</a>
+<a href="/journal/{{ post.pk }}/edit/">Edit</a>
 
 <hr />
 
@@ -35,7 +36,15 @@
         {{ comment.created_at }}
         {{ comment.updated_at }}
     </li>
+    <a href="/journal/{{ post.pk }}/comments/{{ comment.pk }}/edit/">Comment Edit</a>
+    <a href="/journal/{{ post.pk }}/comments/{{ comment.pk }}/delete">delete</a>
     {% endfor %}
+    <br>
+    <hr/>
+    <a href="/journal/{{ post.pk }}/comments/new/">Comment</a>
 </ul>
+
+<hr />
+
 
 {% endblock %}
