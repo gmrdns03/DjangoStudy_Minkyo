@@ -1,0 +1,49 @@
+{% extends "movie/layout.html" %}
+
+{% block content %}
+
+<h2>{{ movie.title }}</h2>
+
+<hr />
+
+<img src="{{ movie.poster.url }}" style="width=100px;", "height=100px;" />
+
+<p style="margin-top:20px ;">
+<strong>줄거리</strong>
+
+{{ movie.desc|linebreaks }}
+</p>
+
+<p style="margin-top:20px ;">
+<strong>영화감독 :</strong> {{ movie.director }}<br>
+<strong>주연배우 :</strong> {{ movie.actor }}
+</p>
+
+<hr/>
+
+{{ movie.created_at }}
+{{ movie.updated_at }}
+
+<hr />
+
+<a href="/movie/">영화 목록</a>
+
+<hr />
+
+<h3>Review<h3>
+
+<ul>
+    {% for review in review_list %}
+    <li>
+        {{ review.message }}
+        {{ review.created_at }}
+        {{ review.updated_at }}
+    </li>
+    
+    {% endfor %}
+
+</ul>
+
+
+
+{% endblock %}
