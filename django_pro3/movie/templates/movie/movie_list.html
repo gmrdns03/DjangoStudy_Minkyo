@@ -5,14 +5,19 @@
     {% for movie in movie_list %}
         <li>
             <img src="{{ movie.poster.url }}" style="width: 100px;" />
+
             <a href="/movie/{{ movie.pk }}/">
                 {{ movie.title }}
             </a>
+
+            <a href="/movie/{{ actor.pk }}/">
             {{ movie.actor }}
+            </a>
             {{ movie.director }}
         </li>
     {% endfor %}
     </ul>
     <hr />
-    <a href="/movie/new/">Post New</a>
+    <a href="/movie/new/">영화 등록</a>
+    <a href="/actor/new/">배우 등록</a>
 {% endblock %}

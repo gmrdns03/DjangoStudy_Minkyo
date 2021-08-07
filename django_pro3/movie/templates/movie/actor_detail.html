@@ -1,0 +1,38 @@
+{% extends "movie/layout.html" %}
+
+{% block content %}
+
+<h2>{{ actor.name }}</h2>
+
+<hr />
+
+<img src="{{ actor.photo.url }}" style="width=100px;", "height=100px;" />
+
+<hr/>
+
+{{ actor.created_at }}
+{{ actor.updated_at }}
+
+<hr />
+
+<a href="/movie/">영화 목록</a>
+
+<hr />
+
+<h3>Review<h3>
+
+<ul>
+    {% for movie in movie_list %}
+    <li>
+        {{ movie.title }}
+        {{ movie.created_at }}
+        {{ movie.updated_at }}
+    </li>
+    
+    {% endfor %}
+
+</ul>
+
+
+
+{% endblock %}

@@ -94,17 +94,79 @@
 	]
 
 3. templates/movie폴더 안에 movie_list.html 만들기
+	- 웹에 표시할 html코드 작성
 
 4. 오류가 난다면 초반 셋팅에서 
 	urls.py 패쓰 추가
  	setting.py의 INSTALLED_APP에 앱이 추가 되었는지
 	확인하기
 
+================= 입력한 데이터 웹 화면에 디테일 화면 구현하기 ======================
+1. views.py  2. urls.py  3. html템플릿 만들기
+=========================================================================
+1. views.py 셋팅하기
+	def movie_detail(request: HttpRequest, pk):
+    		movie = Movie.objects.get(pk=pk)
+    		review_list = movie.review_set.all()
+    		return render(
+        		request,
+        		"movie/movie_detail.html",
+        		{"movie": movie, "review_list": review_list,},
+    		)
+
+2. urls.py 셋팅하기
+	- urlpatterns에 패쓰추가
+	path("<int:pk>/", views.movie_detail, name="movie_detail"),
+
+3. templates/movie폴더 안에 movie_detail.html 만들기 
+	- 웹에 표시할 html코드 작성
 
 
+================= 메인 화면에서 새로운 Movie 등록하는 버튼 만들기 ======================
+1. forms.py    2. views.py   3. urls.py    4. html템플릿 수정
+=========================================================================
+1. forms.py 셋팅하기
+	from django import forms
+	from movie.models import Movie
 
+	class MovieForm(forms.ModelForm):
+    		class Meta:
+        		model = Movie
+        		# 유저로부터 입력받을 필드 이름들을 나열
+        		fields = ["title", "actor", "director", "poster", "desc"]
 
+	(위 같은 양식으로 movie를 새로 등록할 화면의 폼을 설정한다.)
 
+2. views.py 셋팅하기
+	def movie_new(request: HttpRequest):
+    	     if request.method == "POST":
+        	  	   form = MovieForm(request.POST, request.FILES)
+     	   	   if form.is_valid():
+        	               movie = form.save(commit=False)
+                           movie.save()
+                           return redirect(f"/movie/{movie.pk }")
+
+                 else:  # "GED"으로 받는 경우
+       		 form = MovieForm()
+
+	    return render(request, "movie/movie_form.html", {"form": form,},)
+
+	( 위 같은 양식으로 views.py 설정하기 )
+
+3. urls.py 셋팅하기
+	- 패쓰에 버튼을 누르면 이동할 경로를 추가
+	path("new/", views.movie_new, name="movie_new"),
+
+4. templates/movie하위에 movie_form.html 파일을 생성한다.
+	<form action="" method="POST" enctype="multipart/form-data">
+	    {% csrf_token %}
+	    <table>
+	        {{ form }}
+	    </table>
+	    <input type="submit" />
+	 </form>
+
+	( 위 같은 양식으로 form이 들어갈 자리와 제출 버튼을 html로 구현해준다. )
 
 
 

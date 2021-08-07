@@ -16,6 +16,7 @@ class TimestampedModel(models.Model):
 class Actor(TimestampedModel):
     name = models.CharField(max_length=20)
     photo = models.ImageField()
+    # many to many로 Movie와 연결하는 방법 찾아보기
 
     def __str__(self):
         return self.name
