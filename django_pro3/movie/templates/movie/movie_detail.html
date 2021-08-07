@@ -37,6 +37,8 @@
     {% for review in review_list %}
     <li>
         <strong>{{ review.message }}</strong><br>
+        <a href="/movie/{{ movie.pk }}/review/{{ review.pk }}/edit/">수정</a>
+        <a href="/movie/{{ movie.pk }}/review/{{ review.pk }}/delete/">삭제</a><br>
         {{ review.created_at }}
         {{ review.updated_at }}
     </li>

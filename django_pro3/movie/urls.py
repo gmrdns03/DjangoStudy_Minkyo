@@ -20,4 +20,12 @@ urlpatterns = [
     path("<int:pk>/delete/", views.movie_delete, name="movie_delete"),
     # 리뷰 추가
     path("<int:movie_pk>/review/new/", views.review_new, name="review_new"),
+    # 리뷰 수정
+    path("<int:movie_pk>/review/<int:pk>/edit/", views.review_edit, name="review_edit"),
+    # 리뷰 삭제
+    path(
+        "<int:movie_pk>/review/<int:pk>/delete/",
+        views.review_delete,
+        name="review_delete",
+    ),
 ]

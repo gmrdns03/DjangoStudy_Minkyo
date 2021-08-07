@@ -99,9 +99,24 @@ def review_new(request: HttpRequest, movie_pk: int):
     return render(request, "movie/review_form.html", {"form": form,},)
 
 
-def review_Edit():
-    pass
+def review_edit(request: HttpRequest, movie_pk: int, pk: int):
+    review = Review.objects.get(pk=pk)
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES, instance=review)
+        if form.is_valid():
+            review = form.save()
+            return redirect(f"/movie/{movie_pk}/")
+
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, "movie/review_form.html", {"form": form,},)
 
 
-def review_delete():
-    pass
+def review_delete(request: HttpRequest, movie_pk: int, pk: int):
+    review = Review.objects.get(pk=pk)
+    if request.method == "POST":
+        review.delete()
+        return redirect(f"/movie/{movie_pk}/")
+
+    return render(request, "movie/review_fonfirm_delete.html", {"review": review,},)
