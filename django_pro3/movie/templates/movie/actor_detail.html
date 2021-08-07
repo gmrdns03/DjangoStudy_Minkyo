@@ -22,15 +22,17 @@
 <ul>
     {% for movie in movie_list %}
     <li>
+    <img src="{{ movie.poster.url }}" style="width=100px;", "height=100px;" /><br>
         {{ movie.title }}<br>
         {{ movie.created_at }}
         {{ movie.updated_at }}
     </li>
-    
+    <br>
     {% endfor %}
 
 </ul>
 
+<a href="/movie/actor/">배우 목록</a>
 
 
 {% endblock %}

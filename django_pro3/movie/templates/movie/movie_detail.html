@@ -44,6 +44,19 @@
 
 </ul>
 
+<hr />
+
+<h3>예고편<h3>
+
+<ul>
+{% for video in video_list %}
+{{ video.name }}<br>
+<iframe width="560" height="315" src="{{ video.youtube_url }}" title="{{ video.name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+<br>
+{% endfor %}
+
+</ul>
 
 
 {% endblock %}

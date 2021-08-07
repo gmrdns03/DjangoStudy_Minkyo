@@ -13,16 +13,16 @@ def index(request: HttpRequest):
 def movie_detail(request: HttpRequest, pk):
     movie = Movie.objects.get(pk=pk)
     review_list = movie.review_set.all()
+    video_list = movie.video_set.all()
     return render(
         request,
         "movie/movie_detail.html",
-        {"movie": movie, "review_list": review_list,},
+        {"movie": movie, "review_list": review_list, "video_list": video_list,},
     )
 
 
 def actor_index(request: HttpRequest):
     qs = Actor.objects.all()
-    # movie_list = qs.movie_set.all()
     return render(request, "movie/actor_list.html", {"actor_list": qs,},)
 
 

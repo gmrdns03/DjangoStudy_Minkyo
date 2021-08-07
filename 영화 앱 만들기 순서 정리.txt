@@ -172,16 +172,71 @@
 
 
 ================= 메인 -> 배우 목록 버튼 구현하기 ======================
-1. forms.py  2. views.py  3. urls.py  4. html 템플릿 생성 및 수정
+1. views.py  2. urls.py  3. html 템플릿 생성 및 수정
 =============================================================
+1. views.py 셋팅하기
+	def actor_index(request: HttpRequest):
+    		qs = Actor.objects.all()
+    		return render(request, "movie/actor_list.html", {"actor_list": qs,},)
+
+2. urls.py 셋팅하기
+	- 패쓰에 경로를 추가
+	path("actor/", views.actor_index, name="actor_index"),
+
+3. 메인 화면템플릿(movie_list.html)에 배우 목록 버튼 만들기
+	<a href="/movie/actor/">배우 목록</a>
+	(href아래 경로는 urls에서 미리 설정한 경로로 맞추기)
+
+4. 배우 목록 버튼을 클릭한 후에 보여줄 탬플릿(actor_list.py) 만들기
 
 
+=========== 메인 -> 배우 목록 -> 배우이름 버튼 및 디테일 화면 구현하기===========
+배우 디테일 화면에서 보여줄 것: 배우사진, 배우이름, 배우필모, 배우수정버튼(나중), 필모수정버튼(나중)
 
+1. views.py  2. urls.py  3. html탬플릿 생성 및 수정
+==============================================================
+1. views.py 셋팅하기
+	def actor_detail(request: HttpRequest, actor_pk):
+	    actor = Actor.objects.get(pk=actor_pk)
+	    movie_list = actor.movie_set.all()
+	    return render(
+	        request, "movie/actor_detail.html", {"actor": actor, "movie_list": movie_list,},
+	    )
+	(위 코드 추가)
 
+2. urls.py 셋팅하기
+	- 패쓰에 경로 추가
+	path("actor/<int:actor_pk>/", views.actor_detail, name="actor_detail"),
 
+3. actor_list에서 구현된 배우 이름을 클릭하여 배우 디테일로 이동시키기 위해 링크 구현하기
+	-1. actor_list의 {{ actor.name }}을 <a href="/movie/actor/{{ actor.pk }}/"></a>태그로 감싼다.
 
+4. 배우 디테일을 구현할 actor_detail.html 탬플릿을 만든다.
 
+=========== 메인 영화목록 -> 영화 디테일 화면에 유튜브 영상 가져오기 ===========
+<영화 디테일을 구현 완료 한 상태에서 보기>
 
+1. views.py  2. movie_detail.html
+==============================================================
+
+1. 데이터베이스에 url 저장시 설정
+	- 유튜브 영상을 가져오려면 url을 저장할 때 부터 url 코드 안에 embed설정을 따로 해야 한다.
+	- 예를 들어
+		일반 공유 url복사 : https://youtu.be/m9obn-8gHQA
+		embed가 들어간 url 복사: https://www.youtube.com/embed/m9obn-8gHQA
+	- embed가 들어간 코드를 복사해서 데이터베이스에 저장해줘야 한다.
+	- 일반 공유 url을 복사한 후에 중간에 ( .be --> be.com/embed) 수정을 해줘도 된다.
+	- 혹은 유튜브 공유하기 --> 퍼가기 버튼을 누르면 embed가 들어간 url을 획득할 수 있다. 
+
+2. 영화 디테일을 구현 완료 했다면 views.py에서 video데이터를 가져오기 위해
+	- movie_detail함수 아래 video_list = movie.video_set.all()코드 추가
+	- return render() 괄호 안에 "video_list": video_list, 코드 추가
+
+3. movie_detail.html video를 가져오는 for문을 만든다.
+	<iframe> 태그 안에 url을 넣는 src="" 큰따옴표 사이에 저장한 youtube_url이 돌도록 해준다.
+
+-예를 들어 다음 코드와 같다.
+<iframe width="560" height="315" src="{{ video.youtube_url }}" title="{{ video.name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
