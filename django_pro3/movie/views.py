@@ -119,4 +119,4 @@ def review_delete(request: HttpRequest, movie_pk: int, pk: int):
         review.delete()
         return redirect(f"/movie/{movie_pk}/")
 
-    return render(request, "movie/review_fonfirm_delete.html", {"review": review,},)
+    return render(request, "movie/review_confirm_delete.html", {"review": review,},)
