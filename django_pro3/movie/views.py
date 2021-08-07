@@ -1,5 +1,5 @@
 from movie.models import Actor, Movie, Video, Review
-from movie.forms import MovieForm
+from movie.forms import MovieForm, ActorForm
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -20,13 +20,18 @@ def movie_detail(request: HttpRequest, pk):
     )
 
 
-# def actor_detail(request: HttpRequest, pk, actor_pk):
-#     movie = Movie.objects.get(pk=pk)
-#     actor = Actor.objects.get(pk=actor_pk)
-#     movie_list = actor.movie_set.all()
-#     return render(
-#         request, "movie/actor_detail.html", {"actor": actor, "movie_list": movie_list,},
-#     )
+def actor_index(request: HttpRequest):
+    qs = Actor.objects.all()
+    # movie_list = qs.movie_set.all()
+    return render(request, "movie/actor_list.html", {"actor_list": qs,},)
+
+
+def actor_detail(request: HttpRequest, actor_pk):
+    actor = Actor.objects.get(pk=actor_pk)
+    movie_list = actor.movie_set.all()
+    return render(
+        request, "movie/actor_detail.html", {"actor": actor, "movie_list": movie_list,},
+    )
 
 
 def movie_new(request: HttpRequest):
@@ -41,4 +46,13 @@ def movie_new(request: HttpRequest):
         form = MovieForm()
 
     return render(request, "movie/movie_form.html", {"form": form,},)
+
+
+# def actor_new(request: HttpRequest):
+#     if request.method = "POST":
+#         form = ActorForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             actor = form.save()
+#             actor.save()
+#             return redirect(f"/movie")
 

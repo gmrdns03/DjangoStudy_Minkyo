@@ -15,16 +15,14 @@
 
 <hr />
 
-<a href="/movie/">영화 목록</a>
-
 <hr />
 
-<h3>Review<h3>
+<h3>필모그래피<h3>
 
 <ul>
     {% for movie in movie_list %}
     <li>
-        {{ movie.title }}
+        {{ movie.title }}<br>
         {{ movie.created_at }}
         {{ movie.updated_at }}
     </li>
