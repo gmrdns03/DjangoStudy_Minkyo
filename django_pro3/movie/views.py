@@ -35,12 +35,34 @@ def movie_new(request: HttpRequest):
     return render(request, "movie/movie_form.html", {"form": form,},)
 
 
-def actor_index(request: HttpRequest):
+def movie_edit(request: HttpRequest, pk):
+    movie = Movie.objects.get(pk=pk)
+    if request.method == "POST":
+        form = MovieForm(request.POST, request.FILES, instance=movie)
+        if form.is_valid():
+            movie = form.save()
+            return redirect(f"/movie/{pk}/")
+    else:
+        form = MovieForm(instance=movie)
+
+    return render(request, "movie/movie_form.html", {"form": form,},)
+
+
+def movie_delete(request: HttpRequest, pk):
+    movie = Movie.objects.get(pk=pk)
+    if request.method == "POST":
+        movie.delete()
+        return redirect(f"/movie/")
+
+    return render(request, "movie/movie_confrim_delete.html", {"movie": movie,},)
+
+
+def actor_index(request: HttpRequest) -> HttpResponse:
     qs = Actor.objects.all()
     return render(request, "movie/actor_list.html", {"actor_list": qs,},)
 
 
-def actor_detail(request: HttpRequest, actor_pk):
+def actor_detail(request: HttpRequest, actor_pk) -> HttpResponse:
     actor = Actor.objects.get(pk=actor_pk)
     movie_list = actor.movie_set.all()
     return render(

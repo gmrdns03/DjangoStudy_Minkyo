@@ -1,7 +1,9 @@
 {% extends "movie/layout.html" %}
 
 {% block content %}
-<a href="/movie/">영화 목록</a> <br>
+<a href="/movie/">영화 목록</a>
+<a href="/movie/{{movie.pk}}/edit/">영화 수정</a>
+<a href="/movie/{{movie.pk}}/delete/">영화 삭제</a> <br>
 <hr />
 <h2>{{ movie.title }}</h2>
 
