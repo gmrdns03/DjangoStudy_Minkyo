@@ -10,6 +10,8 @@ urlpatterns = [
     path("actor/", views.actor_index, name="actor_index"),
     # 배우 디테일 연결
     path("actor/<int:actor_pk>/", views.actor_detail, name="actor_detail"),
+    # 배우 추가
+    path("actor/new/", views.actor_new, name="actor_new"),
     # 영화 추가
     path("new/", views.movie_new, name="movie_new"),
     # 영화 수정

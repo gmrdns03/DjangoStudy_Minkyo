@@ -29,7 +29,7 @@ def movie_new(request: HttpRequest):
             movie.save()
             return redirect(f"/movie/{movie.pk }")
 
-    else:  # "GED"으로 받는 경우
+    else:  # "GET"으로 받는 경우
         form = MovieForm()
 
     return render(request, "movie/movie_form.html", {"form": form,},)
@@ -70,13 +70,17 @@ def actor_detail(request: HttpRequest, actor_pk) -> HttpResponse:
     )
 
 
-# def actor_new(request: HttpRequest):
-#     if request.method = "POST":
-#         form = ActorForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             actor = form.save()
-#             actor.save()
-#             return redirect(f"/movie")
+def actor_new(request: HttpRequest):
+    if request.method == "POST":
+        form = ActorForm(request.POST, request.FILES)
+        if form.is_valid():
+            actor = form.save()
+            return redirect(f"/movie/actor/{actor.pk}/")
+
+    else:
+        form = ActorForm()
+
+    return render(request, "movie/actor_form.html", {"form": form,},)
 
 
 def review_new(request: HttpRequest, movie_pk: int):
