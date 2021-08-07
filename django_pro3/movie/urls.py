@@ -12,4 +12,6 @@ urlpatterns = [
     path("actor/<int:actor_pk>/", views.actor_detail, name="actor_detail"),
     # 영화 추가
     path("new/", views.movie_new, name="movie_new"),
+    # 리뷰 추가
+    path("<int:movie_pk>/review/new/", views.review_new, name="review_new"),
 ]

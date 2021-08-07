@@ -1,5 +1,5 @@
 from django import forms
-from movie.models import Movie, Actor
+from movie.models import Movie, Actor, Review
 
 
 class MovieForm(forms.ModelForm):
@@ -14,3 +14,9 @@ class ActorForm(forms.ModelForm):
         model = Actor
         # 유저로부터 입력받을 필드 이름들을 나열
         fields = ["name", "photo"]
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ["message"]

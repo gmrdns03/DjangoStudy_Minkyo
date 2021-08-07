@@ -1,7 +1,8 @@
 {% extends "movie/layout.html" %}
 
 {% block content %}
-
+<a href="/movie/">영화 목록</a> <br>
+<hr />
 <h2>{{ movie.title }}</h2>
 
 <hr />
@@ -24,29 +25,26 @@
 {{ movie.created_at }}
 {{ movie.updated_at }}
 
-<hr />
-
-<a href="/movie/">영화 목록</a>
 
 <hr />
 
-<h3>Review<h3>
-
+<h3>Review</h3>
+<a href="/movie/{{ movie.pk }}/review/new/">리뷰쓰기</a>
+<hr />
 <ul>
     {% for review in review_list %}
     <li>
-        {{ review.message }}
+        <strong>{{ review.message }}</strong>
         {{ review.created_at }}
         {{ review.updated_at }}
     </li>
     
     {% endfor %}
-
 </ul>
-
 <hr />
 
-<h3>예고편<h3>
+
+<h3>예고편</h3>
 
 <ul>
 {% for video in video_list %}
@@ -57,6 +55,4 @@
 {% endfor %}
 
 </ul>
-
-
 {% endblock %}

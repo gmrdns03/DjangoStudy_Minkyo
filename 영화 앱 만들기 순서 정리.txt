@@ -235,11 +235,31 @@
 3. movie_detail.html video를 가져오는 for문을 만든다.
 	<iframe> 태그 안에 url을 넣는 src="" 큰따옴표 사이에 저장한 youtube_url이 돌도록 해준다.
 
--예를 들어 다음 코드와 같다.
+-예를 들어 다음 코드와 같다.(양식은 유튜브 공유->퍼가기 에서도 확인 가능하다)
 <iframe width="560" height="315" src="{{ video.youtube_url }}" title="{{ video.name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+=========== 메인 영화목록 -> 영화 디테일 -> 리뷰 쓰기 링크 추가하기 ===========
+<이 전에 영화 디테일에서 리뷰까지 구현해 놓았어야 함>
 
+1. forms.py  2. views.py  3. urls.py  4. html탬플릿
+=============================================================
+1. forms.py에서 클래스 ReviewForm() 설정
+
+2. views.py에서 review_new()함수 정의
+	- 함수를 정의할 때 redirect 경로 주의하기
+	- 인스턴트로 받은 새로운 리뷰를 저장하는 과정 주의하기
+
+3. urls.py에서 패쓰 추가
+	- 예시
+	path("<int:movie_pk>/review/new/", views.review_new, name="review_new"),
+
+4. review_form.html 탬플릿 만들기
+
+5. movie_detail.html 탬플릿 안에 리뷰쓰기 버튼 만들기
+	- 엥커 태그<a></a>에서 호출할 경로 주의해서 설정하기
+	- 예시
+	<a href="/movie/{{ movie.pk }}/review/new/">리뷰쓰기</a>
 
 
 

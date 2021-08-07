@@ -1,5 +1,5 @@
 from movie.models import Actor, Movie, Video, Review
-from movie.forms import MovieForm, ActorForm
+from movie.forms import MovieForm, ActorForm, ReviewForm
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -21,19 +21,6 @@ def movie_detail(request: HttpRequest, pk):
     )
 
 
-def actor_index(request: HttpRequest):
-    qs = Actor.objects.all()
-    return render(request, "movie/actor_list.html", {"actor_list": qs,},)
-
-
-def actor_detail(request: HttpRequest, actor_pk):
-    actor = Actor.objects.get(pk=actor_pk)
-    movie_list = actor.movie_set.all()
-    return render(
-        request, "movie/actor_detail.html", {"actor": actor, "movie_list": movie_list,},
-    )
-
-
 def movie_new(request: HttpRequest):
     if request.method == "POST":
         form = MovieForm(request.POST, request.FILES)
@@ -48,6 +35,19 @@ def movie_new(request: HttpRequest):
     return render(request, "movie/movie_form.html", {"form": form,},)
 
 
+def actor_index(request: HttpRequest):
+    qs = Actor.objects.all()
+    return render(request, "movie/actor_list.html", {"actor_list": qs,},)
+
+
+def actor_detail(request: HttpRequest, actor_pk):
+    actor = Actor.objects.get(pk=actor_pk)
+    movie_list = actor.movie_set.all()
+    return render(
+        request, "movie/actor_detail.html", {"actor": actor, "movie_list": movie_list,},
+    )
+
+
 # def actor_new(request: HttpRequest):
 #     if request.method = "POST":
 #         form = ActorForm(request.POST, request.FILES)
@@ -56,3 +56,26 @@ def movie_new(request: HttpRequest):
 #             actor.save()
 #             return redirect(f"/movie")
 
+
+def review_new(request: HttpRequest, movie_pk: int):
+    movie = Movie.objects.get(pk=movie_pk)
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.movie = movie
+            review.save()
+            return redirect(f"/movie/{movie_pk}")
+
+    else:  # GET 방식으로 받은 경우
+        form = ReviewForm()
+
+    return render(request, "movie/review_form.html", {"form": form,},)
+
+
+def review_Edit():
+    pass
+
+
+def review_delete():
+    pass
