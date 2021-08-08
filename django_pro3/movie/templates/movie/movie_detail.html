@@ -9,7 +9,7 @@
 
 <hr />
 
-<img src="{{ movie.poster.url }}" style="width=100px;", "height=100px;" />
+<img src="{{ movie.poster.url }}" style="width: 100px;" />
 
 <p style="margin-top:20px ;">
 <strong>줄거리</strong>
@@ -49,10 +49,12 @@
 
 
 <h3>예고편</h3>
-
+<a href="/movie/{{ movie.pk }}/video/new/">예고편 추가</a>
 <ul>
 {% for video in video_list %}
-{{ video.name }}<br>
+{{ video.name }}
+<a href="/movie/{{ movie.pk }}/video/{{ video.pk }}/edit">수정</a>
+<a href="/movie/{{ movie.pk }}/video/{{ video.pk }}/delete">삭제</a><br>
 <iframe width="560" height="315" src="{{ video.youtube_url }}" title="{{ video.name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <br>
 <br>
