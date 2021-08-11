@@ -1,10 +1,12 @@
 from django.db import models
+from django.urls import reverse
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import TextField
 from django.db.models.fields.files import ImageField
 from django.db.models.fields import URLField
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 
 # Create your models here.
 class TimestampedModel(models.Model):
@@ -38,6 +40,10 @@ class Movie(TimestampedModel):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        url = reverse("movie_detail", args=[self.pk])
+        return url
+
 
 class Video(TimestampedModel):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -49,6 +55,7 @@ class Video(TimestampedModel):
 
 
 class Review(TimestampedModel):
+    author = models.ForeignKey(User, on_delete=CASCADE)
     movie = models.ForeignKey(Movie, on_delete=CASCADE)
     message = models.TextField()
 

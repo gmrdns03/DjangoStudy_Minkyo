@@ -26,5 +26,9 @@ class VideoAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     search_fields = ["movie"]
-    list_display = ["movie", "message", "created_at"]
+    list_display = ["movie", "message", "created_at", "author"]
     list_filter = ["created_at"]
+
+
+# @admin.register(Review)
+# class ReviewAdmin(admin.ModelAdmin):
