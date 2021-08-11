@@ -1,0 +1,5 @@
+__pycashe__
+db.sqlite3
+/media
+/static
+django-debug-toolbar
