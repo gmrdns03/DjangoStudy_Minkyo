@@ -28,6 +28,8 @@ urlpatterns = [
         views.review_delete,
         name="review_delete",
     ),
+    # 강사님꺼 리뷰 리스트 패스
+    path("movie/<int:movie_pk>/reviews/", views.review_list, name="review_list"),
     # 비디오 추가
     path("<int:movie_pk>/video/new/", views.video_new, name="video_new"),
     # 비디오 수정

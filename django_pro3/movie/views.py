@@ -84,6 +84,17 @@ def actor_new(request: HttpRequest):
     return render(request, "movie/actor_form.html", {"form": form,},)
 
 
+# 강사님꺼 코드
+def review_list(request, movie_pk):
+    # movie = Movie.objects.get(pk=movie_pk)
+    # review_list = movie.review_set.all()
+
+    review_list = Review.objects.filter(movie__pk=movie_pk)
+
+    # 우리가 일반적인 응답 포맷은 HTML
+    return render(request, "movie/review_list.html", {"review_list": review_list,})
+
+
 # 영화 리뷰 추가, 수정, 삭제
 def review_new(request: HttpRequest, movie_pk: int):
     movie = Movie.objects.get(pk=movie_pk)
