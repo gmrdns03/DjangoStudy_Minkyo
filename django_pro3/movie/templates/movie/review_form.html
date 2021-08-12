@@ -1,13 +1,15 @@
 {% extends "movie/layout.html" %}
+{% load bootstrap5 %}
 
 {% block content %}
 
 <form action="" method="POST" enctype="multipart/form-data">
 {% csrf_token %}
-<table>
+{% comment %} <table>
 {{ form }}
-</table>
-<input type="submit" />
+</table> {% endcomment %}
+{% bootstrap_form form %}
+<input type="submit" class="btn btn-primary" />
 </form>
 
 {% endblock %}
