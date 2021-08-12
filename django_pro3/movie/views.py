@@ -7,7 +7,7 @@ from django.http import JsonResponse
 
 # 영화 목록, 디테일, 추가, 수정, 삭제
 def index(request: HttpRequest):
-    qs = Movie.objects.all()
+    qs = Movie.objects.all().select_related("actor")
 
     # QueryDict 타입 (사전형식인데 기능이 좀 더 추가)
     # QueryString 인자 : 모든 요청에 존재할 수 있어요.
@@ -73,7 +73,7 @@ def movie_delete(request: HttpRequest, pk):
 
 # 배우 목록, 디테일, 추가 (수정, 삭제)
 def actor_index(request: HttpRequest) -> HttpResponse:
-    qs = Actor.objects.all()
+    qs = Actor.objects.all().prefetch_related("movie_set")
     return render(request, "movie/actor_list.html", {"actor_list": qs,},)
 
 

@@ -4,17 +4,21 @@
 <a href="/movie/">영화 목록</a>
 <a href="/movie/actor/new/">배우 등록</a>
 <hr/>
-<ul>
-<li>
+<div class="row">
 {% for actor in actor_list %}
-<img src="{{ actor.photo.url }}" style="width: 100px;" />
+        <div class="card col-sm-3 col-md-4 col-sm-6 col-xs-12">
+            <img src="{{ actor.photo.url }}" class="card-img-top" alt="{{ actor.name }}" />
+            <div class="card-body">
+                <h5 class="card-title">{{ actor.name }}</h5>
+                <p class="card-text">
+                    {{ actor.movie_set.all }}
+                </p>
+                <a href="/movie/actor/{{ actor.pk }}/" class="btn btn-primary">Detail</a>
+            </div>
+        </div>
 
-<a href="/movie/actor/{{ actor.pk }}/">
-{{ actor.name }}
-</a>
-<li>
 {% endfor %}
-</ul>
+</div>
 
 
 {% endblock %}

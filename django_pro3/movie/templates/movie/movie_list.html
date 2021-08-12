@@ -21,7 +21,9 @@
             <div class="card-body">
                 <h5 class="card-title">{{ movie.title }}</h5>
                 <p class="card-text">
-                    {{ movie.desc|truncatechars:100 }} <br>
+                    {{ movie.desc|truncatechars:100 }}
+                </p>
+                <p class="card-text">
                     {{ movie.actor }} {{ movie.director }}
                 </p>
                 <a href="/movie/{{ movie.pk }}/" class="btn btn-primary">Detail</a>
