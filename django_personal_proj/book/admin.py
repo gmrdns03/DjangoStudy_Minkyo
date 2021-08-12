@@ -5,8 +5,12 @@ from book.models import Book, Writer, Review, Video, Tag
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     search_fields = ["title"]
-    list_display = ["title", "cover_img", "publisher"]
+    list_display = ["title", "cover_img", "writer_names", "publisher"]
     list_filter = ["title"]
+
+    def writer_names(self, book):
+        writer_qs = book.writer.all()
+        return ", ".join(writer.name for writer in writer_qs)
 
 
 @admin.register(Writer)

@@ -8,23 +8,27 @@
         <input type="text" name="query" placeholder="검색어를입력해주세요" value="{{ request.GET.query }}" />
         <input type="submit" name="검색" />
         <button>검색</button>
+
+        
     </form>
 
     <hr/>
 
-    <ul>
+<div class="row">
     {% for movie in movie_list %}
-        <li>
-            <img src="{{ movie.poster.url }}" style="width: 100px;" />
-
-            <a href="/movie/{{ movie.pk }}/">
-                {{ movie.title }}
-            </a>
-
-            {{ movie.actor }}
-            {{ movie.director }}
-        </li>
+        <div class="card col-sm-3 col-md-4 col-sm-6 col-xs-12">
+            <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.title }}" />
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">
+                    {{ movie.desc|truncatechars:100 }} <br>
+                    {{ movie.actor }} {{ movie.director }}
+                </p>
+                <a href="/movie/{{ movie.pk }}/" class="btn btn-primary">Detail</a>
+            </div>
+        </div>
     {% endfor %}
+</div>
     </ul>
     <hr />
 {% endblock %}
