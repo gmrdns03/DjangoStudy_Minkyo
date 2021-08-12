@@ -3,7 +3,7 @@
 {% block content %}
 
 <form action="" method="POST" enctype="multipart/form-data">
-{% csrf_token %}
+{% csrf_token %}  <!--get 요청은 없이 받을 수 있지만 POST일 경우에는 반드시 넣어줘야 한다-->
 <table>
 {{ form }}
 </table>

@@ -8,6 +8,15 @@ from django.http import JsonResponse
 # 영화 목록, 디테일, 추가, 수정, 삭제
 def index(request: HttpRequest):
     qs = Movie.objects.all()
+
+    # QueryDict 타입 (사전형식인데 기능이 좀 더 추가)
+    # QueryString 인자 : 모든 요청에 존재할 수 있어요.
+    query = request.GET.get("query", "")
+    if query:
+        qs = qs.filter(title__icontains=query)
+    # request.POST # POST에만 존재
+    # request.FILES
+
     return render(request, "movie/movie_list.html", {"movie_list": qs,},)
 
 

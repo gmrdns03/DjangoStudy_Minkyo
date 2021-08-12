@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("movie/", include("movie.urls")),
     path("book/", include("book.urls")),
     path("accounts/", include("accounts.urls")),
+    path("", RedirectView.as_view(pattern_name="index"), name="root"),
 ]
 
 # 이미지 관리를 위해

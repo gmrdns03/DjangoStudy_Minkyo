@@ -4,6 +4,14 @@
     <a href="/movie/new/">영화 등록</a>
     <a href="/movie/actor/">배우 목록</a>
     <hr/>
+    <form action='' method="get">
+        <input type="text" name="query" placeholder="검색어를입력해주세요" value="{{ request.GET.query }}" />
+        <input type="submit" name="검색" />
+        <button>검색</button>
+    </form>
+
+    <hr/>
+
     <ul>
     {% for movie in movie_list %}
         <li>
