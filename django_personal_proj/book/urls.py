@@ -1,5 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
+from book import views
+from django.urls import path
 
 
-urlpatterns = []
+urlpatterns = [
+    path("", views.index, name="book_list"),
+]

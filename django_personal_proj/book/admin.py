@@ -5,14 +5,14 @@ from book.models import Book, Writer, Review, Video, Tag
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     search_fields = ["title"]
-    list_display = ["title", "cover_img", "author", "publisher"]
+    list_display = ["title", "cover_img", "publisher"]
     list_filter = ["title"]
 
 
 @admin.register(Writer)
 class WriterAdmin(admin.ModelAdmin):
     search_fields = ["name"]
-    list_display = ["photo", "book", "name"]
+    list_display = ["photo", "name"]
     list_filter = ["name"]
 
 

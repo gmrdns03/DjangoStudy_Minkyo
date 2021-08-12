@@ -1,0 +1,12 @@
+{% for book in book_list %}
+<ul>
+<li>
+    <img src="{{ book.cover_img.url }}" style="width: 100px" />
+
+    {{ book.title }}
+    {{ book.writer }}
+    {{ book.publisher }}
+    {{ book.tag }}
+</li>
+</ul>
+{% endfor %}

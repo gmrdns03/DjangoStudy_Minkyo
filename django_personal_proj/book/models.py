@@ -12,12 +12,28 @@ class TimestampModel(models.Model):
         abstract = True
 
 
+class Tag(TimestampModel):
+    tag = models.CharField(max_length=10, blank=True)
+
+    def __str__(self) -> str:
+        return self.tag
+
+
+class Writer(TimestampModel):
+    name = models.CharField(max_length=20)
+    photo = models.ImageField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Book(TimestampModel):
     title = models.CharField(max_length=30, unique=True)
     cover_img = models.ImageField()
     desc = models.TextField()
-    author = models.CharField(max_length=30)
+    writer = models.ManyToManyField(Writer)
     publisher = models.CharField(max_length=20)
+    tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title
@@ -25,15 +41,6 @@ class Book(TimestampModel):
     def get_absolute_url(self):
         url = reverse("book_detail", args=[self.pk])
         return url
-
-
-class Writer(TimestampModel):
-    book = models.ForeignKey(Book, on_delete=CASCADE)
-    name = models.CharField(max_length=20)
-    photo = models.ImageField(blank=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Review(TimestampModel):
@@ -48,12 +55,4 @@ class Video(TimestampModel):
 
     def __str__(self) -> str:
         return self.title
-
-
-class Tag(TimestampModel):
-    book = models.CharField(max_length=10, blank=True)
-    tag = models.ManyToManyField(Book)
-
-    def __str__(self) -> str:
-        return self.tag
 
